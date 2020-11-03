@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react'
+import styled from 'styled-components'
+import Header from './components/Header'
+import Wrapper from './components/Wrapper'
+import Table from './components/Table'
+import Rules from './components/Rules'
+import Modal from './components/Modal'
+
+const AppStyled = styled.main`
+background-image: radial-gradient(circle at top, hsl(214, 47%, 23%), hsl(237, 49%, 15%));
+min-height:100vh;
+padding: 2em;
+font-family: 'Barlow Semi Condensed', sans-serif;
+
+ 
+`
 
 function App() {
+  const setIsVisibles=()=>{
+    setIsVisible(!isVisible)
+  }
+  const [isVisible, setIsVisible] = useState(false)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppStyled>
+      <Wrapper>
+        <Header></Header>
+        <Table />
+        <Rules OnOpen={setIsVisibles} />
+        {isVisible &&
+          <Modal OnClose={setIsVisibles}/>
+        }
+      </Wrapper>
+
+    </AppStyled>
   );
 }
 
