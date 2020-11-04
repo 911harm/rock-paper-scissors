@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const RulesStyled = styled.button`
  display:block;
  cursor:pointer;
- margin:30px auto 0 ;
+ margin:70px auto 0 ;
  background:transparent;
  border:1px solid white;
  border-radius:.5em;
