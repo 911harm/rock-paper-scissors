@@ -71,25 +71,54 @@ export default function Table() {
     const [waiting, setwaiting] = useState("")
     const [Playing, setPlaying] = useState(false)
     const [pick, setpick] = useState("")
-
     function inGame() {
         setTimeout(() => {
             setwaiting(Choices[Math.floor(Math.random() * 3)])
+
         }
             , 1000)
 
+    }
+    function whoWin() {
+        if (waiting === pick) {
+            return "DRAW"
+        }
+        if (pick === "paper") {
+            if (waiting === "rock") {
+                return "YOU WIN"
+            }
+            if (waiting === "scissors") {
+                return "YOU LOSE"
+            }
+        }
+        if (pick === "scissors") {
+            if (waiting === "rock") {
+                return "YOU LOSE"
+            }
+            if (waiting === "paper") {
+                return "YOU WIN"
+            }
+        }
+        if (pick === "rock") {
+            if (waiting === "paper") {
+                return "YOU LOSE"
+            }
+            if (waiting === "scissors") {
+                return "YOU WIN"
+            }
+        }
     }
     function PlayAganin() {
         setwaiting("")
         setPlaying(false)
     }
     function onClick(name) {
-        inGame()
         setPlaying(true)
         setpick(name)
+        inGame()
     }
     return (
-        <TableStyled Playing={Playing}>
+        <TableStyled Playing={Playing} >
             {Playing
                 ? <React.Fragment>
                     <Choice name={pick} />
@@ -98,11 +127,11 @@ export default function Table() {
                         <div className="default"></div>
                         :
                         <React.Fragment>
-                        <Choice name={waiting} onClick={onClick} />
-                        <div className="play-again">
-                        <h3 className="play-again-text">YOU LOSE</h3>
-                        <button className="btn-play-again" onClick={PlayAganin}>Play Again</button>
-                        </div>
+                            <Choice name={waiting} />
+                            <div className="play-again">
+                                <h3 className="play-again-text">{whoWin()}</h3>
+                                <button className="btn-play-again" onClick={PlayAganin}>Play Again</button>
+                            </div>
                         </React.Fragment>
                     }
                     <span className="span-picked">YOU PICKED</span>

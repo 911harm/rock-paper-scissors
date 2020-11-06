@@ -39,8 +39,9 @@ const color = {
 }
 
 export default function Choice({ name, onClick }) {
-    const handleClick = () => {
-        onClick(name)
+    function handleClick() {
+        if(onClick){
+        onClick(name)}
     }
     return (
         <ChoiceStyled onClick={handleClick} color={color[name]}>
