@@ -5,8 +5,8 @@ import Wrapper from './components/Wrapper'
 import Table from './components/Table'
 import Rules from './components/Rules'
 import Modal from './components/Modal'
+import { ScoreContext } from './context'
 
-const Score = React.createContext("cat");
 const AppStyled = styled.main`
 background-image: radial-gradient(circle at top, hsl(214, 47%, 23%), hsl(237, 49%, 15%));
 min-height:100vh;
@@ -17,12 +17,13 @@ font-family: 'Barlow Semi Condensed', sans-serif;
 `
 
 function App() {
+  const [scoreC, setScoreC] = useState(0)
   const setIsVisibles = () => {
     setIsVisible(!isVisible)
   }
   const [isVisible, setIsVisible] = useState(false)
   return (
-    <Score.Provider value={0}>
+    <ScoreContext.Provider value={{ scoreC, setScoreC, }}>
       <AppStyled>
         <Wrapper>
           <Header></Header>
@@ -34,7 +35,7 @@ function App() {
         </Wrapper>
 
       </AppStyled>
-    </Score.Provider>
+    </ScoreContext.Provider>
   );
 }
 

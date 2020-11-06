@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
- 
- 
+import { ScoreContext } from '../context'
+
+
 const ScoreStyled = styled.div`
  background:white;
  text-align:center;
@@ -20,12 +21,13 @@ const ScoreStyled = styled.div`
     font-weight:700;
  }
 `
- 
+
 export default function Score() {
+    const {scoreC}=useContext(ScoreContext)
     return (
         <ScoreStyled>
             <small>Score</small>
-            <p>12</p>
+            <p>{scoreC}</p>
         </ScoreStyled>
     )
 }

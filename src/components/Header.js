@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Score from './Score'
+
 
 const HeaderStyled = styled.div`
  display:flex;
