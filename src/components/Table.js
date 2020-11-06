@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import Choice from './Choice'
+import { ScoreContext } from '../context'
+
 
 
 const TableStyled = styled.div`
@@ -67,44 +69,59 @@ margin:50px 0;
 `
 
 export default function Table() {
+    const { scoreC, setScoreC } = useContext(ScoreContext)
     const Choices = ["paper", "scissors", "rock"]
+    const [whoW, setwhoW] = useState("")
     const [waiting, setwaiting] = useState("")
     const [Playing, setPlaying] = useState(false)
     const [pick, setpick] = useState("")
-    function inGame() {
-        setTimeout(() => {
-            setwaiting(Choices[Math.floor(Math.random() * 3)])
 
-        }
-            , 1000)
+    function inGame() {
+        return new Promise((resolve,reject)=>{
+            let pickHouse
+            setTimeout(() => {
+                pickHouse=Choices[Math.floor(Math.random() * 3)]
+                setwaiting(pickHouse)
+                resolve(pickHouse) 
+            }
+                , 1000)
+        
+        })
 
     }
-    function whoWin() {
-        if (waiting === pick) {
-            return "DRAW"
+    function whoWin(s,pick) {
+        if (s === pick) {
+            // return "DRAW"
+            setwhoW("DRAW")
         }
         if (pick === "paper") {
-            if (waiting === "rock") {
-                return "YOU WIN"
+            if (s === "rock") {
+                setwhoW("YOU WIN")
+                setScoreC(scoreC+1)
             }
-            if (waiting === "scissors") {
-                return "YOU LOSE"
+            if (s === "scissors") {
+                setScoreC(scoreC-1)
+                setwhoW("YOU LOSE")
             }
         }
         if (pick === "scissors") {
-            if (waiting === "rock") {
-                return "YOU LOSE"
+            if (s === "rock") {
+                setScoreC(scoreC-1)
+                setwhoW("YOU LOSE")
             }
-            if (waiting === "paper") {
-                return "YOU WIN"
+            if (s === "paper") {
+                setwhoW("YOU WIN")
+                setScoreC(scoreC+1)
             }
         }
         if (pick === "rock") {
-            if (waiting === "paper") {
-                return "YOU LOSE"
+            if (s === "paper") {
+                setScoreC(scoreC-1)
+                setwhoW("YOU LOSE")
             }
-            if (waiting === "scissors") {
-                return "YOU WIN"
+            if (s === "scissors") {
+                setwhoW("YOU WIN")
+                setScoreC(scoreC+1)
             }
         }
     }
@@ -112,10 +129,12 @@ export default function Table() {
         setwaiting("")
         setPlaying(false)
     }
-    function onClick(name) {
-        setPlaying(true)
+     async function onClick(name) {
         setpick(name)
-        inGame()
+        setPlaying(true)
+        const PickHouseAux= await inGame()
+        whoWin(PickHouseAux,name)
+        
     }
     return (
         <TableStyled Playing={Playing} >
@@ -129,7 +148,7 @@ export default function Table() {
                         <React.Fragment>
                             <Choice name={waiting} />
                             <div className="play-again">
-                                <h3 className="play-again-text">{whoWin()}</h3>
+                                <h3 className="play-again-text">{whoW}</h3>
                                 <button className="btn-play-again" onClick={PlayAganin}>Play Again</button>
                             </div>
                         </React.Fragment>
