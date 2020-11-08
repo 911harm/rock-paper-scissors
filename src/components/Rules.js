@@ -17,6 +17,13 @@ const RulesStyled = styled.button`
      background:white;
      color:hsl(214, 47%, 23%);
  }
+ @media screen and (min-width: 768px){
+    padding:15px 35px;
+    letter-spacing:1.3px;
+    margin:0 -50px ;
+    float:right;
+    
+}
 `
  
 export default function Rules({OnOpen,isVisible}) {

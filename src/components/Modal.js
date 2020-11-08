@@ -27,6 +27,19 @@ h2{
     text-transform:uppercase;
     color:#3B4262;
 }
+@media screen and (min-width: 768px){
+    flex-grow:10px;
+    transform:translateX(50%) translateY(50%);
+    height: 55vh;
+    width: 50%;
+    border-radius:10px;
+    button{
+        position: absolute;
+        top: 43px;
+        right: 26px;
+    }
+    
+}
 `
 
 export default function Modal({OnClose}) {

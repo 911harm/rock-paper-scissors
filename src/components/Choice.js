@@ -1,8 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
+const rotate = keyframes`
+  to {
+    box-shadow:0 0 52px 25px rgba(255,255,255,.2);
+    transform:rotateY(360deg)
+  }
+`
 
 const ChoiceStyled = styled.div`
+
 box-sizing:border-box;
  display:flex;
  width:130px;
@@ -13,12 +20,22 @@ box-sizing:border-box;
  align-items:center;
  background:white;
  box-shadow:0 2px 0 ${({ color }) => color.shadow};
+ ${({ activeW }) => activeW && 'box-shadow:0 0 0px 0px rgba(255,255,255,.2);'}
+ animation:${({ activeW }) => activeW ? rotate : ""} 1s linear forwards;
  cursor:pointer;
  transition:100ms all;
- &:active{
-     transform:scale(.89)
- }
+    &:active{
+        transform:scale(.89)
+    }
+
+
+@media screen and (min-width:768px){
+    width:150px;
+    height:145px;
+}
 `
+
+
 const color = {
     paper: {
         base: "#516ef4",
@@ -38,13 +55,14 @@ const color = {
     }
 }
 
-export default function Choice({ name, onClick }) {
+export default function Choice({ name, onClick, active }) {
     function handleClick() {
-        if(onClick){
-        onClick(name)}
+        if (onClick) {
+            onClick(name)
+        }
     }
     return (
-        <ChoiceStyled onClick={handleClick} color={color[name]}>
+        <ChoiceStyled onClick={handleClick} activeW={active} color={color[name]}>
             <img src={`./images/icon-${name}.svg`} alt={name} />
         </ChoiceStyled>
     )
